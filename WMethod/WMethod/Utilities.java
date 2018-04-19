@@ -1,4 +1,3 @@
-
 /*
  * 
  * This class contains debug switches, and several utility methods.
