@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 public class Utilities{
-  
+ 
   public static boolean fsmPrintSw=true;
   public static boolean pTableDebugSw=false;
   public static boolean testingTreeDebugSw=false;
@@ -18,6 +18,8 @@ public class Utilities{
   public static boolean fsmCreationDebugSw=false;
   public static boolean fsmExecutionDebugSw=true;
   public static boolean WSetDebugSw=true;
+  private static String[] outputs = new String[106];
+  private static int slot = 0;
   
   public static void debugPtable(String s){
     if(pTableDebugSw)
@@ -102,5 +104,32 @@ public class Utilities{
     }
     Utilities.debugFSMExecution("\nFSM execution completed. Final state: "+currentState);
     Utilities.debugFSMExecution("Output pattern:"+outputPattern);
+    outputs[slot++] = outputPattern;
+  }
+  
+  public static void getJUnit(Vector<String> tests) {
+	  int i = 1;
+	  String currentOutput;
+	  System.out.println("package Proj5;\n");
+	  System.out.println("import org.junit.*;\n" + 
+	  		"import static org.junit.Assert.*;\n");
+	  System.out.println("public class JamesBondTest {");
+	  System.out.println("\tJamesBond james = new JamesBond();");
+	  Iterator<String> itr = tests.iterator();
+	     while(itr.hasNext()) {
+	    	 System.out.println("\t@Test \n\tpublic void testCase" + i + "(){");
+	    	 currentOutput = outputs[i-1];
+	    	 if(currentOutput.contains("yes")) {
+	    		 System.out.print("\t\tassertTrue(");
+	    	 }
+	    	 else {
+	    		 System.out.print("\t\tassertFalse(");
+	    	 }
+	    	 System.out.println("james.bondRegex(\"" + itr.next().replaceAll("a", "1") + "\"));");
+	    	 System.out.println("\t}");
+	    	 i++;
+	     }
+	     System.out.println("}");
+	     
   }
 }// End of class Utilities.

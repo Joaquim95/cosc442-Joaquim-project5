@@ -387,6 +387,7 @@ public class WMethod{
     	 							//exception was thrown when input was not separated by a space
     	 Utilities.runFSM(FSM, 1, itr.next().replace(""," ").trim(), " ");
      }
+     Utilities.getJUnit(tests);
      
    }// End of main()
    
